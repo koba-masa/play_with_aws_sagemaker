@@ -15,4 +15,4 @@ WORKDIR ${WORKINGDIR}
 RUN mkdir -p ${WORKINGDIR}
 COPY src/* ${WORKINGDIR}
 
-ENTRYPOINT [ "/usr/local/bin/python", "main.py"]
+ENTRYPOINT [ "/usr/local/bin/python", "app.py"]
