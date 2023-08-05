@@ -9,3 +9,18 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
+
+      - name: AWS Configure
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: push ecr
+        run: |
+          cd serverless_inference
+          aws ecr get-login-password | docker login --username AWS --password-stdin ${{ secrets.AWS_ECR_ACCOUNT }}
+          docker build -t play_with_aws_sagemaker .
+          docker tag play_with_aws_sagemaker:latest ${{ secrets.AWS_ECR_ACCOUNT }}/${{ secrets.AWS_ECR_REPOSITORY }}:latest
+          docker push ${{ secrets.AWS_ECR_ACCOUNT }}/${{ secrets.AWS_ECR_REPOSITORY }}:latest
