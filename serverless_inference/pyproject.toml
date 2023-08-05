@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "serverless-inference"
+version = "0.1.0"
+description = "AWS SageMaker サーバーレス推論"
+authors = ["koba-masa <kobayashi_mshr@koba-masa.com>"]
+readme = "README.md"
+packages = [{include = "serverless_inference"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+boto3 = "^1.28.20"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -2,6 +2,9 @@ name: サーバレス推論のデプロイ
 
 on: workflow_dispatch
 
+env:
+    TZ: 'Asia/Tokyo'
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -17,10 +20,22 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: push ecr
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Push ECR
+        working-directory: serverless_inference
         run: |
-          cd serverless_inference
           aws ecr get-login-password | docker login --username AWS --password-stdin ${{ secrets.AWS_ECR_ACCOUNT }}
           docker build -t play_with_aws_sagemaker .
           docker tag play_with_aws_sagemaker:latest ${{ secrets.AWS_ECR_ACCOUNT }}/${{ secrets.AWS_ECR_REPOSITORY }}:latest
           docker push ${{ secrets.AWS_ECR_ACCOUNT }}/${{ secrets.AWS_ECR_REPOSITORY }}:latest
+
+      - name: Deploy Serverless Inference Endpoint
+        working-directory: serverless_inference
+        run: |
+          pip install poetry
+          poetry install --no-root
+          poetry run python deploy.py
