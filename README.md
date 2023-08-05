@@ -1,0 +1,2 @@
+# play_with_aws_sagemaker
+AWS SageMakerで遊び尽くすリポジトリ
