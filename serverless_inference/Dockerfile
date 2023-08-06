@@ -16,3 +16,5 @@ RUN mkdir -p ${WORKINGDIR}
 COPY src/* ${WORKINGDIR}
 
 ENTRYPOINT [ "/usr/local/bin/python", "app.py"]
+
+LABEL com.amazonaws.sagemaker.capabilities.multi-models=true
