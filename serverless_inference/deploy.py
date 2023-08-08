@@ -18,7 +18,7 @@ def create_endpoint_config(client, model_name):
                 'VariantName': 'variant-1',
                 'ModelName': model_name,
                 'ServerlessConfig': {
-                    'MemorySizeInMB': 1024,
+                    'MemorySizeInMB': 6144,
                     'MaxConcurrency': 20,
                 }
             }
