@@ -40,6 +40,7 @@ def ping(response: Response) -> Response:
 
 @app.post("/invocations", response_model=InvocationResponse)
 def transformation(invocation_req: InvocationRequest) -> InvocationResponse:
+    print("hello, world")
     result = ScoringService.predict(invocation_req.word)
     word_similarities = []
     if result:
