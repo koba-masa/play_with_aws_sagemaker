@@ -2,6 +2,7 @@ from fastapi import FastAPI
 import uvicorn
 
 import glob
+import os
 
 app = FastAPI()
 
@@ -12,6 +13,7 @@ def ping():
 
 @app.post("/invocations")
 def transformation():
+    os_env_path = os.environ.get('PATH')
     opt_ml_mode_dir = "/opt/ml/model"
     opt_ml_mode_files = {
         'dir': opt_ml_mode_dir,
@@ -21,7 +23,12 @@ def transformation():
     for file in files:
         opt_ml_mode_files['files'].append(file)
 
-    return {"invocated": opt_ml_mode_files}
+    results = {
+        "opt_ml_mode_files": opt_ml_mode_files,
+        "os_env_path": os_env_path
+    }
+
+    return {"results": results}
 
 
 if __name__ == "__main__":
