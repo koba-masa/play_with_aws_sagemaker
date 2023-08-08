@@ -23,4 +23,4 @@ COPY ./opt/ /opt/
 RUN chmod 755 /opt/program/serve
 
 EXPOSE 8080
-ENTRYPOINT ["python3", "/opt/program/serve"]
+ENTRYPOINT ["/usr/local/bin/python", "/opt/program/serve"]
