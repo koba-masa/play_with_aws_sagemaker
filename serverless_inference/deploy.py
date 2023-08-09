@@ -3,7 +3,7 @@ import boto3
 
 def deploy():
     client = boto3.client('sagemaker')
-    model = 'serverless-inference-202308052309'
+    model = 'serverless-inference-error-detection'
     endpoint_config = create_endpoint_config(client, model)
     print(endpoint_config)
     update_endpoint(client, endpoint_config)
